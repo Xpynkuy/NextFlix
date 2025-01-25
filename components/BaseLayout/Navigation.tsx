@@ -10,7 +10,7 @@ interface NavLink {
 const Navigation: React.FC<NavLink> = ({label, href}) => {
     return (
         <Link href={href}>
-            <div className="hover:text-white/70 transition ease-in-out">{label}</div>
+            <div className="hover:text-white/70 transition ease-in-out active:text-gray-500">{label}</div>
         </Link>
     )
 }

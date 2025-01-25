@@ -9,6 +9,7 @@ export default {
   theme: {
     extend: {
       colors: {
+        'BGMAIN': '#100E19'
         
       },
     },
