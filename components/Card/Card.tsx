@@ -1,14 +1,24 @@
 import { CardData } from "@/types/types";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 export interface CardProps {
   data: CardData;
+  type: string;
 }
 
-const Card: React.FC<CardProps> = ({ data }) => {
+const Card: React.FC<CardProps> = ({ data, type }) => {
+
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.push(`/${type}/${data.id}`);
+  };
+
+
   return (
-    <div className="relative overflow-hidden rounded-3xl w-58 h-80 transition transform hover:-translate-y-2">
+    <div onClick={handleClick} className="relative overflow-hidden rounded-3xl w-58 h-80 transition transform hover:-translate-y-2 cursor-pointer">
       <Image
         src={data.poster.url}
         alt={data.name}

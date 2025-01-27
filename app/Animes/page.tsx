@@ -1,4 +1,5 @@
-import { AnimesCatalog } from "@/components/Catalog/AnimesCatalog";
+
+import { Catalog } from "@/components/Catalog/Catalog";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -9,8 +10,7 @@ export const metadata: Metadata = {
 export default function AnimesPage() {
   return (
     <div className="flex flex-col gap-8">
-      <h1>Anime</h1>
-      <AnimesCatalog/>
+      <Catalog type="anime"/>
     </div>
   );
 }

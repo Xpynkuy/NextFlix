@@ -1,4 +1,5 @@
-import { SeriesCatalog } from "@/components/Catalog/SeriesCatalog";
+
+import { Catalog } from "@/components/Catalog/Catalog";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -11,7 +12,7 @@ export default function SeriesPage() {
     <div>
       <div className="flex flex-col gap-10">
         <h1>Series</h1>
-        <SeriesCatalog />
+        <Catalog type="series"/>
       </div>
     </div>
   );

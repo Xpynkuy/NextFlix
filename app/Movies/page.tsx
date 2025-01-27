@@ -1,4 +1,5 @@
-import { MoviesCatalog } from "@/components/Catalog/MoviesCatalog";
+
+import { Catalog } from "@/components/Catalog/Catalog";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -9,8 +10,7 @@ export const metadata: Metadata = {
 export default function MoviesPage() {
   return (
     <div>
-      <h1>Movies</h1>
-      <MoviesCatalog/>
+      <Catalog type="movies"/>
     </div>
   );
 }
