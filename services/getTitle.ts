@@ -7,6 +7,7 @@ const API_URL = "https://api.kinopoisk.dev/v1.4/movie";
 const API_TOKEN = "EY9T3A6-DBDMSBK-NAP8P7D-EJH4AG1";
 
 
+
 export const getTitles = async (type: string, limit: number = 50): Promise<CardData[]> => {
     try {
       const response = await axios.get(API_URL, {
@@ -31,6 +32,7 @@ export const getTitles = async (type: string, limit: number = 50): Promise<CardD
       return [];
     }
   };
+
 
   export const getTitleById = async (id: string): Promise<CardData | null> => {
     try {
@@ -81,7 +83,7 @@ export const getCriticsTitle = async (limit: number = 5): Promise<CardData[]> =>
     try {
         const response = await axios.get(API_URL, {
             params: {
-                sortField: 'rating.filmCritics',
+                sortField: 'votes.filmCritics',
                 sortType: '-1',
                 limit
             },
@@ -128,6 +130,8 @@ export const getTitlesByVotes = async (limit: number = 5): Promise<CardData[]> =
             return [];
           }
 };
+
+
 
 
 

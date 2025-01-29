@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Navigation } from "./Navigation"
 
 
@@ -13,8 +14,8 @@ const navItems = [
 const Header = () => {
   return (
     <header className="h-12 flex justify-between items-center py-8 text-white">
-      <div >
-        <input className="rounded-2xl w-72 h-10 px-2" type="search" placeholder="Search..." />
+      <div>
+        <Link className="text-2xl" href={'/'}>NEXT<span className="text-red-600">FLIX</span></Link>
       </div>
       <div className="flex gap-12 text-lg">
       {navItems.map((item) => (

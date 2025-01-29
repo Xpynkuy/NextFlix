@@ -21,17 +21,25 @@ export interface Trailer {
     id: number;
     photo: string;
     name: string;
-    profession: string;
+    profession: {
+      value: string
+    };
   }
   
   export interface Rating {
     kp: number;
     imdb: number;
   }
+
+  export interface Country {
+    name: string;
+  }
   
   export interface CardData {
     id: number;
     name: string;
+    alternativeName: string;
+    enName: string;
     year: number;
     description: string;
     shortDescription: string;
@@ -40,11 +48,16 @@ export interface Trailer {
     rating: Rating;
     votes: {
         imdb:number;
+        kp: number;
+    }
+    logo: {
+      url: string;
     }
     ageRating: number;
     movieLength: string;
     poster: { url: string };
     backdrop: { url: string };
     persons: Person[];
+    countries: Country[];
     videos: Videos; // Добавляем тип Videos к CardData
   }

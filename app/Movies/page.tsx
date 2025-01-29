@@ -1,4 +1,3 @@
-
 import { Catalog } from "@/components/Catalog/Catalog";
 import { Metadata } from "next";
 
@@ -10,7 +9,7 @@ export const metadata: Metadata = {
 export default function MoviesPage() {
   return (
     <div>
-      <Catalog type="movies"/>
+      <Catalog type="movies" />
     </div>
   );
 }

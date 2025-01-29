@@ -1,6 +1,4 @@
-
 import { CardData } from "@/types/types";
-
 
 import { BannerCard } from "./BannerCard";
 
