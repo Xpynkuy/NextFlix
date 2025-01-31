@@ -7,6 +7,7 @@ interface Props {
     params: {
         type: string;
         id: string;
+        
     }
 }
 

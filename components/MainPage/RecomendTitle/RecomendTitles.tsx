@@ -39,9 +39,9 @@ const RecomendTitles: React.FC<RecomendTitleProps> = ({
   if (error) return <p>{error}</p>;
 
   return (
-    <div>
+    <div className="py-4">
       <h1 className="text-white font-semibold text-xl mt-4">{title}</h1>
-      <p className="text-gray-500 py-2">{desc}</p>
+      <p className="text-gray-500 py-4">{desc}</p>
 
       <CardList items={items} />
     </div>

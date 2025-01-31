@@ -9,9 +9,10 @@ export const metadata: Metadata = {
 export default function SeriesPage() {
   return (
     <div>
-      <div className="flex flex-col gap-10">
-        <Catalog type="series" />
-      </div>
+      <h1 className="text-2xl py-4">Сериалы смотреть онлайн</h1>
+      <p className="text-gray-500 mb-10">Многие современные сериалы по своей зрелищности и сюжетным перипетиям мало в чем уступают полнометражным фильмам. Они с первой серии захватывают ваше внимание и заставляют с большим нетерпением ожидать каждого следующего эпизода. Так что сезоны сериалов пролетают для их зрителей незаметно!</p>
+
+      <Catalog type="series" />
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { CardData } from "@/types/types";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 export interface CardProps {
@@ -7,8 +8,13 @@ export interface CardProps {
 }
 
 const BannerCard: React.FC<CardProps> = ({ data }) => {
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.push(`/title/${data.id}`);
+  };
   return (
-    <div className="rounded-3xl w-full h-[500px] mx-auto relative overflow-hidden">
+    <div className="rounded-3xl w-full h-[500px] mx-auto relative overflow-hidden cursor-pointer">
       {/* Контейнер для изображения */}
       <div className="relative w-full h-full">
         <Image
@@ -51,7 +57,13 @@ const BannerCard: React.FC<CardProps> = ({ data }) => {
           </p>
 
           {/* Кнопка */}
-          <button className="mt-3 sm:mt-4 px-3 sm:px-4 py-1 sm:py-2 bg-white text-black rounded-2xl hover:bg-green-100 transition-colors text-xs sm:text-sm">
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              handleClick();
+            }}
+            className="mt-3 sm:mt-4 px-3 sm:px-4 py-1 sm:py-2 bg-white text-black rounded-2xl hover:bg-gray-400 transition-colors text-xs sm:text-sm"
+          >
             Смотреть
           </button>
         </div>

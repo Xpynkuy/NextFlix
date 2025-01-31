@@ -12,7 +12,7 @@ const Card: React.FC<CardProps> = ({ data, type }) => {
   const router = useRouter();
 
   // Проверка наличия poster и url
-  const posterUrl = data.poster?.url || '/default-poster.jpg'; // Замените '/default-poster.jpg' на путь к изображению по умолчанию
+  const posterUrl = data.poster?.url || data.backdrop.url; // Запасное изображение, если poster.url отсутствует
 
   const handleClick = () => {
     router.push(`/${type}/${data.id}`);
