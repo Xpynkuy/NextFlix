@@ -43,7 +43,7 @@ const RecomendTitles: React.FC<RecomendTitleProps> = ({
       <h1 className="text-white font-semibold text-xl mt-4">{title}</h1>
       <p className="text-gray-500 py-4">{desc}</p>
 
-      <CardList items={items} />
+      <CardList items={items} type="all" />
     </div>
   );
 };

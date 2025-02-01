@@ -8,11 +8,11 @@ const API_TOKEN = "EY9T3A6-DBDMSBK-NAP8P7D-EJH4AG1";
 
 
 
-export const getTitles = async (type?: string, limit: number = 250): Promise<CardData[]> => {
+export const getTitles = async (type?: string, limit: number = 250): Promise<CardData[]> => { // Получаем тайтлы для каталога
   try {
     const response = await axios.get(API_URL, {
       params: {
-        type: type === 'movies' ? 'movie' : type === 'series' ? 'tv-series' : undefined, // Если тип не указан, не передаем его
+        type: type === 'movies' ? 'movie' : type === 'series' ? 'tv-series' : undefined, 
         sortField: 'top250',
         sortType: '-1',
         limit,
@@ -33,8 +33,32 @@ export const getTitles = async (type?: string, limit: number = 250): Promise<Car
   }
 };
 
+export const getTitleSearch = async (limit: number = 200): Promise<CardData[]> => { // Все тайтлы для поиска
+  try {
+    const response = await axios.get(API_URL, {
+      params: {
+        sortField: 'top250',
+        sortType: '-1',
+        limit
+      },
+      headers: {
+        'X-API-KEY': API_TOKEN
+    }
+});
 
-  export const getTitleById = async (id: string): Promise<CardData | null> => {
+if (response.data && response.data.docs) {
+    return response.data.docs;
+  }
+
+  return [];
+} catch (error) {
+    console.error("Ошибка при запросе фильмов:", error);
+    return [];
+  }
+};
+
+
+  export const getTitleById = async (id: string): Promise<CardData | null> => { // Получаем тайтлы по id
     try {
       const response = await axios.get(`${API_URL}/${id}`, {
         headers: {
@@ -53,7 +77,10 @@ export const getTitles = async (type?: string, limit: number = 250): Promise<Car
     }
   };
 
-export const getTitleByRating = async (limit: number = 10): Promise<CardData[]> => {
+
+
+
+export const getTitleByRating = async (limit: number = 10): Promise<CardData[]> => { 
     try {
         const response = await axios.get(API_URL, {
             params: {
@@ -70,11 +97,9 @@ export const getTitleByRating = async (limit: number = 10): Promise<CardData[]> 
             return response.data.docs;
           }
       
-          // Если данных нет, возвращаем пустой массив
           return [];
         } catch (error) {
             console.error("Ошибка при запросе фильмов:", error);
-            // Возвращаем пустой массив, чтобы избежать undefined
             return [];
           }
 };
@@ -96,11 +121,9 @@ export const getCriticsTitle = async (limit: number = 5): Promise<CardData[]> =>
             return response.data.docs;
           }
       
-          // Если данных нет, возвращаем пустой массив
           return [];
         } catch (error) {
             console.error("Ошибка при запросе фильмов:", error);
-            // Возвращаем пустой массив, чтобы избежать undefined
             return [];
           }
 };
@@ -122,11 +145,9 @@ export const getTitlesByVotes = async (limit: number = 5): Promise<CardData[]> =
             return response.data.docs;
           }
       
-          // Если данных нет, возвращаем пустой массив
           return [];
         } catch (error) {
             console.error("Ошибка при запросе фильмов:", error);
-            // Возвращаем пустой массив, чтобы избежать undefined
             return [];
           }
 };

@@ -1,8 +1,7 @@
 "use client";
 import { useState } from "react";
-import { Catalog } from "@/components/Catalog/Catalog";
 import { Search } from "./Search";
-
+import { SearchCatalog } from "./SearchCatalog";
 
 export const SearchPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -14,7 +13,7 @@ export const SearchPage = () => {
   return (
     <div className="flex flex-col gap-8">
       <Search onSearch={handleSearch} />
-      <Catalog type="Search" searchQuery={searchQuery} />
+      <SearchCatalog searchQuery={searchQuery} />
     </div>
   );
 };

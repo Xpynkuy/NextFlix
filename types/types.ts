@@ -1,17 +1,4 @@
-// types/types.ts
 
-export interface Trailer {
-    url: string;
-    name: string;
-    site: string;
-    size: number;
-    type: string;
-  }
-  
-  export interface Videos {
-    trailers: Trailer[];
-  }
-  
   export interface Genre {
     id: number;
     name: string;
@@ -59,5 +46,4 @@ export interface Trailer {
     backdrop: { url: string };
     persons: Person[];
     countries: Country[];
-    videos: Videos; // Добавляем тип Videos к CardData
   }

@@ -26,7 +26,7 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="min-h-screen bg-BGMAIN">
+      <body className="min-h-screen bg-BGMAIN px-4">
         <div className="max-w-7xl mx-auto flex flex-col min-h-screen relative z-10">
           <Header />
           <main className="flex-1 py-6 overflow-hidden">{children}</main>
