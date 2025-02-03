@@ -62,13 +62,13 @@ export const Catalog: React.FC<CatalogProps> = ({ type }) => {
       const genreMatch =
         filters.genres.length === 0 ||
         filters.genres.every((genre) =>
-          title.genres.map((g) => g.name).includes(genre)
+          title.genres?.map((g) => g.name).includes(genre) || false
         );
 
       const countryMatch =
         filters.countries.length === 0 ||
         filters.countries.every((country) =>
-          title.countries.map((c) => c.name).includes(country)
+          title.countries?.map((c) => c.name).includes(country) || false
         );
 
       const yearMatch =
@@ -105,17 +105,20 @@ export const Catalog: React.FC<CatalogProps> = ({ type }) => {
     setHasMore(titles.length > itemsPerPage);
   };
 
-  if (loading) return <p>Загрузка...</p>;
-  if (error) return <p>{error}</p>;
-
   // Подготовка уникальных значений для фильтров
   const uniqueGenres = Array.from(
-    new Set(titles.flatMap((title) => title.genres.map((genre) => genre.name)))
+    new Set(
+      titles
+        .flatMap((title) => title.genres?.map((genre) => genre.name) || [])
+    )
   ).map((name, index) => ({ id: index, name }));
 
   const uniqueCountries = Array.from(
-    new Set(titles.flatMap((title) => title.countries.map((country) => country.name)))
-  ); // Преобразуем обратно в массив строк
+    new Set(
+      titles
+        .flatMap((title) => title.countries?.map((country) => country.name) || [])
+    )
+  );
 
   const uniqueYears = Array.from(new Set(titles.map((title) => title.year)))
     .filter((year) => year != null)
@@ -125,7 +128,7 @@ export const Catalog: React.FC<CatalogProps> = ({ type }) => {
     <div>
       <FilterComponent
         genres={uniqueGenres}
-        countries={uniqueCountries} // Передаем массив строк
+        countries={uniqueCountries}
         years={uniqueYears}
         selectedGenres={filters.genres}
         selectedCountries={filters.countries}
@@ -138,12 +141,24 @@ export const Catalog: React.FC<CatalogProps> = ({ type }) => {
         onApplyFilters={applyFilters}
         onResetFilters={resetFilters}
       />
-      <CardList items={visibleTitles} type={type} />
-      <Pagination
-        hasMore={hasMore}
-        onLoadMore={handleLoadMore}
-        loading={loading}
-      />
+
+      {/* Отображение скелетонов или данных */}
+      {loading ? (
+        <CardList items={[]} type={type} isLoading={true} />
+      ) : error ? (
+        <p>{error}</p>
+      ) : titles.length === 0 ? (
+        <p>Нет данных для отображения</p>
+      ) : (
+        <>
+          <CardList items={visibleTitles} type={type} isLoading={false} />
+          <Pagination
+            hasMore={hasMore}
+            onLoadMore={handleLoadMore}
+            loading={loading}
+          />
+        </>
+      )}
     </div>
   );
 };

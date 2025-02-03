@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 interface FilterComponentProps {
   genres: { id: number; name: string }[];
-  countries: string[]; // Массив строк
+  countries: string[];
   years: number[];
   selectedGenres: string[];
   selectedCountries: string[];
@@ -31,142 +31,53 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
   onApplyFilters,
   onResetFilters,
 }) => {
-  const [isGenreOpen, setIsGenreOpen] = useState(false);
-  const [isCountryOpen, setIsCountryOpen] = useState(false);
-  const [isYearOpen, setIsYearOpen] = useState(false);
-  const [isRatingOpen, setIsRatingOpen] = useState(false);
+  const [openMenu, setOpenMenu] = useState<string | null>(null);
+  const handleOpenMenu = (menu: string) => setOpenMenu(openMenu === menu ? null : menu);
+
+  const renderFilter = (
+    name: string,
+    items: string[] | number[],
+    selected: string[],
+    onChange: (values: string[]) => void
+  ) => (
+    <div className="relative w-full">
+      <button
+        onClick={() => handleOpenMenu(name)}
+        className={`w-full p-3 rounded-lg text-white transition-all duration-300 ${
+          openMenu === name ? "bg-blue-500" : "bg-black/15 hover:bg-black/25"
+        }`}
+      >
+        {name}
+      </button>
+      {openMenu === name && (
+        <div className="absolute top-12 left-0 w-full bg-BG/100 text-white border border-black/30 rounded-lg shadow-lg z-10 p-1 max-h-48 overflow-y-auto">
+          <select
+            multiple
+            value={selected}
+            onChange={(e) => onChange(Array.from(e.target.selectedOptions, (o) => o.value))}
+            className="w-full p-2 bg-BG/100 border-none text-white"
+          >
+            {items.map((item, i) => (
+              <option key={i} value={item.toString()}>{item}</option>
+            ))}
+          </select>
+        </div>
+      )}
+    </div>
+  );
 
   return (
-    <div className="text-white bg-BG flex gap-10 rounded-xl p-4 mb-10">
-      {/* Жанры */}
-      <div className="flex flex-col relative">
-        <button
-          onClick={() => setIsGenreOpen(!isGenreOpen)}
-          className="text-left p-2 bg-black/15 border rounded-lg"
-        >
-          Жанры
+    <div className="grid grid-cols-5 gap-4 text-white bg-BG rounded-xl p-4 mb-10 h-auto w-full">
+      {renderFilter("Жанры", genres.map((g) => g.name), selectedGenres, onGenreChange)}
+      {renderFilter("Страны", countries, selectedCountries, onCountryChange)}
+      {renderFilter("Годы", years.map((y) => y.toString()), selectedYears, onYearChange)}
+      {renderFilter("Рейтинг", [...Array(10)].map((_, i) => (i + 1).toString()), [selectedRating], (r) => onRatingChange(r[0]))}
+      <div className="flex flex-col gap-2 w-full">
+        <button onClick={onApplyFilters} className="w-full p-3 bg-blue-500/25 text-white rounded-lg hover:bg-blue-600">
+          Применить
         </button>
-        {isGenreOpen && (
-          <div className="absolute top-12 left-0 bg-black/15 border rounded-lg shadow-lg z-10">
-            <select
-              multiple
-              value={selectedGenres}
-              onChange={(e) =>
-                onGenreChange(
-                  Array.from(e.target.selectedOptions, (option) => option.value)
-                )
-              }
-              className="w-48 p-2 bg-black/15 text-white"
-            >
-              {genres.map((genre) => (
-                <option key={genre.id} value={genre.name}>
-                  {genre.name}
-                </option>
-              ))}
-            </select>
-          </div>
-        )}
-      </div>
-
-      {/* Страны */}
-      <div className="flex flex-col relative">
-        <button
-          onClick={() => setIsCountryOpen(!isCountryOpen)}
-          className="text-left p-2 bg-black/15 border rounded-lg"
-        >
-          Страны
-        </button>
-        {isCountryOpen && (
-          <div className="absolute top-12 left-0 bg-black/15 border rounded-lg shadow-lg z-10">
-            <select
-              multiple
-              value={selectedCountries}
-              onChange={(e) =>
-                onCountryChange(
-                  Array.from(e.target.selectedOptions, (option) => option.value)
-                )
-              }
-              className="w-48 p-2 bg-black/15 text-white"
-            >
-              {countries.map((country) => (
-                <option key={country} value={country}>
-                  {country}
-                </option>
-              ))}
-            </select>
-          </div>
-        )}
-      </div>
-
-      {/* Годы */}
-      <div className="flex flex-col relative">
-        <button
-          onClick={() => setIsYearOpen(!isYearOpen)}
-          className="text-left p-2 bg-black/15 border rounded-lg"
-        >
-          Годы
-        </button>
-        {isYearOpen && (
-          <div className="absolute top-12 left-0 bg-black/15 border rounded-lg shadow-lg z-10">
-            <select
-              multiple
-              value={selectedYears}
-              onChange={(e) =>
-                onYearChange(
-                  Array.from(e.target.selectedOptions, (option) => option.value)
-                )
-              }
-              className="w-48 p-2 bg-black/15 text-white"
-            >
-              {years.map((year) => (
-                <option key={year} value={year.toString()}>
-                  {year}
-                </option>
-              ))}
-            </select>
-          </div>
-        )}
-      </div>
-
-      {/* Рейтинг */}
-      <div className="flex flex-col relative">
-        <button
-          onClick={() => setIsRatingOpen(!isRatingOpen)}
-          className="text-left p-2 bg-black/15 border rounded-lg"
-        >
-          Рейтинг
-        </button>
-        {isRatingOpen && (
-          <div className="absolute top-12 left-0 bg-black/15 border rounded-lg shadow-lg z-10">
-            <select
-              value={selectedRating}
-              onChange={(e) => onRatingChange(e.target.value)}
-              className="w-48 p-2 bg-black/15 text-white"
-            >
-              <option value="">Любой</option>
-              {[...Array(10)].map((_, index) => (
-                <option key={index + 1} value={(index + 1).toString()}>
-                  {index + 1}
-                </option>
-              ))}
-            </select>
-          </div>
-        )}
-      </div>
-
-      {/* Кнопки */}
-      <div className="flex items-end gap-2">
-        <button
-          onClick={onApplyFilters}
-          className="p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-        >
-          Применить фильтры
-        </button>
-        <button
-          onClick={onResetFilters}
-          className="p-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600"
-        >
-          Сбросить фильтры
+        <button onClick={onResetFilters} className="w-full p-3 bg-gray-500 text-white rounded-lg hover:bg-gray-600">
+          Сбросить
         </button>
       </div>
     </div>
