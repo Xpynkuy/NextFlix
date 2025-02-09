@@ -1,49 +1,33 @@
 // components/Header.tsx
 "use client";
 import Link from "next/link";
-import { Navigation } from "./Navigation";
-
 import { Bell, Search, User, Menu, X } from "lucide-react";
-import { useState } from "react";
-import { MobileMenu } from "../BurgerMenu/BurgerMenu";
-
-const navItems = [
-  { label: "Главная", href: "/" },
-  { label: "Фильмы", href: "/Movies" },
-  { label: "Сериалы", href: "/Series" },
-];
+import { Navigation } from "./Navigation";
+import { BurgerMenu } from "../BurgerMenu/BurgerMenu";
+import { useMenu } from "@/hooks/useMenu";
 
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
-  const closeMenu = () => {
-    setIsMenuOpen(false);
-  };
+  const { isMenuOpen, toggleMenu, closeMenu } = useMenu();
 
   return (
     <header className="h-12 flex justify-between items-center py-8 text-white relative">
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 md:gap-12">
+        {/* Бургер-меню для мобильных устройств */}
         <button onClick={toggleMenu} className="text-white md:hidden z-50">
           {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
-        {!isMenuOpen && (
-          <div>
-            <Link className="text-2xl" href={"/"}>
-              NEXT<span className="text-red-600">FLIX</span>
-            </Link>
-          </div>
-        )}
-      </div>
 
-      {/* Навигация для десктопов */}
-      <div className="hidden md:flex gap-12 text-lg">
-        {navItems.map((item) => (
-          <Navigation key={item.href} label={item.label} href={item.href} />
-        ))}
+        {/* Логотип и лейблы */}
+        <div className="flex items-center gap-6">
+          <Link className="text-2xl" href={"/"}>
+            NEXT<span className="text-red-600">FLIX</span>
+          </Link>
+          <div className="hidden md:flex gap-12 text-lg">
+            <Navigation label="Главная" href="/" />
+            <Navigation label="Фильмы" href="/Movies" />
+            <Navigation label="Сериалы" href="/Series" />
+          </div>
+        </div>
       </div>
 
       {/* Правая часть хедера (иконки и кнопка входа) */}
@@ -70,7 +54,7 @@ const Header = () => {
       </div>
 
       {/* Мобильное меню */}
-      {isMenuOpen && <MobileMenu navItems={navItems} closeMenu={closeMenu} />}
+      {isMenuOpen && <BurgerMenu closeMenu={closeMenu} />}
     </header>
   );
 };
