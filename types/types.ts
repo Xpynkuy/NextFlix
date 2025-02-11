@@ -22,7 +22,7 @@
     name: string;
   }
   
-  export interface CardData {
+  export interface TitleData {
     id: number;
     name: string;
     alternativeName: string;
