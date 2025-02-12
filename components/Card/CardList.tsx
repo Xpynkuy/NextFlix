@@ -1,27 +1,24 @@
-import { CardData } from '@/types/types';
-import { Card } from '../Card/Card';
-import { CardSkeleton } from '../Skeleton/CardSkeleton';
-
+import { TitleData } from "@/types/types";
+import { Card } from "../Card/Card";
+import { CardSkeletonLoader } from "../Skeleton/CardSkeletonLoader";
 
 interface CardListProps {
-  items: CardData[];
+  items: TitleData[];
   type: string;
-  isLoading?: boolean; // Добавляем пропс для индикации загрузки
+  isLoading?: boolean;
 }
 
 const CardList: React.FC<CardListProps> = ({ items, type, isLoading }) => {
   if (isLoading) {
     return (
-      <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8">
-        {Array.from({ length: 10 }).map((_, index) => (
-          <CardSkeleton key={index} />
-        ))}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8">
+        <CardSkeletonLoader count={10} />
       </div>
     );
   }
 
   return (
-    <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8">
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5  gap-8">
       {items.map((item) => (
         <Card key={item.id} data={item} type={type} />
       ))}

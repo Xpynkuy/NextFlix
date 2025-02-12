@@ -1,19 +1,19 @@
-'use client';
+"use client";
 
 import { useEffect, useState } from "react";
-import { CardData } from "@/types/types";
+import { TitleData } from "@/types/types";
 import { getTitles } from "@/services/getTitle";
 import { CardList } from "../Card/CardList";
 import { Pagination } from "../Pagination/Pagination";
 import { FilterComponent } from "../Filter/FilterComponent";
 
 interface CatalogProps {
-  type: string; // 'movies', 'series', 'anime', 'all'
+  type: string;
 }
 
 export const Catalog: React.FC<CatalogProps> = ({ type }) => {
-  const [titles, setTitles] = useState<CardData[]>([]);
-  const [visibleTitles, setVisibleTitles] = useState<CardData[]>([]);
+  const [titles, setTitles] = useState<TitleData[]>([]);
+  const [visibleTitles, setVisibleTitles] = useState<TitleData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState<number>(1);
@@ -61,14 +61,15 @@ export const Catalog: React.FC<CatalogProps> = ({ type }) => {
     const filteredTitles = titles.filter((title) => {
       const genreMatch =
         filters.genres.length === 0 ||
-        filters.genres.every((genre) =>
-          title.genres?.map((g) => g.name).includes(genre) || false
+        filters.genres.every(
+          (genre) => title.genres?.map((g) => g.name).includes(genre) || false
         );
 
       const countryMatch =
         filters.countries.length === 0 ||
-        filters.countries.every((country) =>
-          title.countries?.map((c) => c.name).includes(country) || false
+        filters.countries.every(
+          (country) =>
+            title.countries?.map((c) => c.name).includes(country) || false
         );
 
       const yearMatch =
@@ -108,15 +109,15 @@ export const Catalog: React.FC<CatalogProps> = ({ type }) => {
   // Подготовка уникальных значений для фильтров
   const uniqueGenres = Array.from(
     new Set(
-      titles
-        .flatMap((title) => title.genres?.map((genre) => genre.name) || [])
+      titles.flatMap((title) => title.genres?.map((genre) => genre.name) || [])
     )
   ).map((name, index) => ({ id: index, name }));
 
   const uniqueCountries = Array.from(
     new Set(
-      titles
-        .flatMap((title) => title.countries?.map((country) => country.name) || [])
+      titles.flatMap(
+        (title) => title.countries?.map((country) => country.name) || []
+      )
     )
   );
 
@@ -135,7 +136,9 @@ export const Catalog: React.FC<CatalogProps> = ({ type }) => {
         selectedYears={filters.years}
         selectedRating={filters.rating}
         onGenreChange={(genres) => handleFilterChange("genres", genres)}
-        onCountryChange={(countries) => handleFilterChange("countries", countries)}
+        onCountryChange={(countries) =>
+          handleFilterChange("countries", countries)
+        }
         onYearChange={(years) => handleFilterChange("years", years)}
         onRatingChange={(rating) => handleFilterChange("rating", rating)}
         onApplyFilters={applyFilters}
@@ -143,15 +146,13 @@ export const Catalog: React.FC<CatalogProps> = ({ type }) => {
       />
 
       {/* Отображение скелетонов или данных */}
-      {loading ? (
-        <CardList items={[]} type={type} isLoading={true} />
-      ) : error ? (
+      {error ? (
         <p>{error}</p>
-      ) : titles.length === 0 ? (
+      ) : titles.length === 0 && !loading ? (
         <p>Нет данных для отображения</p>
       ) : (
         <>
-          <CardList items={visibleTitles} type={type} isLoading={false} />
+          <CardList items={visibleTitles} type={type} isLoading={loading} />
           <Pagination
             hasMore={hasMore}
             onLoadMore={handleLoadMore}

@@ -1,10 +1,9 @@
-// components/Navigation.tsx
 import Link from "next/link";
 
 interface NavLink {
   label: string;
   href: string;
-  onClick?: () => void; 
+  onClick?: () => void;
 }
 
 const Navigation: React.FC<NavLink> = ({ label, href, onClick }) => {

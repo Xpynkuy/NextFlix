@@ -1,25 +1,17 @@
 import { Navigation } from "../BaseLayout/Navigation";
 
-interface MobileMenuProps {
-  navItems: { label: string; href: string }[];
+interface BurgerMenuProps {
   closeMenu: () => void;
 }
 
-const MobileMenu: React.FC<MobileMenuProps> = ({ navItems, closeMenu }) => {
+const BurgerMenu: React.FC<BurgerMenuProps> = ({ closeMenu }) => {
   return (
-    <div className="absolute top-0 left-0 w-full h-64 bg-black/95 z-50 flex flex-col items-center justify-center md:hidden">
-      <div className="flex flex-col items-center gap-4 py-4">
-        {navItems.map((item) => (
-          <Navigation
-            key={item.href}
-            label={item.label}
-            href={item.href}
-            onClick={closeMenu}
-          />
-        ))}
-      </div>
+    <div className="fixed top-0 left-0 w-full h-full bg-black/90 z-40 flex flex-col items-center justify-center">
+      <Navigation label="Главная" href="/" onClick={closeMenu} />
+      <Navigation label="Фильмы" href="/Movies" onClick={closeMenu} />
+      <Navigation label="Сериалы" href="/Series" onClick={closeMenu} />
     </div>
   );
 };
 
-export { MobileMenu };
+export { BurgerMenu };
