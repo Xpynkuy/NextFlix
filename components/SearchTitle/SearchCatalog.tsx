@@ -1,24 +1,25 @@
-"use client";
-import { CardData } from '@/types/types';
+'use client'; 
+
 import { useEffect, useState } from 'react';
-import { CardList } from '../Card/CardList';
+import { TitleData } from '@/types/types';
 import { getTitleSearch } from '@/services/getTitle';
+import { CardList } from '../Card/CardList'; 
 
 interface SearchCatalogProps {
-  searchQuery?: string; // Поисковый запрос
+  searchQuery?: string; 
 }
 
-const SearchCatalog: React.FC<SearchCatalogProps> = ({ searchQuery }) => {
-  const [items, setItems] = useState<CardData[]>([]);
+export const SearchCatalog: React.FC<SearchCatalogProps> = ({ searchQuery }) => {
+  const [items, setItems] = useState<TitleData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Загрузка данных
+
   useEffect(() => {
     const fetchItems = async () => {
       try {
         setLoading(true);
-        const data = await getTitleSearch(); // Получаем все тайтлы
+        const data = await getTitleSearch(); 
         setItems(data);
       } catch (err) {
         console.error(err);
@@ -38,14 +39,19 @@ const SearchCatalog: React.FC<SearchCatalogProps> = ({ searchQuery }) => {
       )
     : items;
 
-  if (loading) return <p>Загрузка...</p>;
-  if (error) return <p>{error}</p>;
 
+  if (error) {
+    return <p>{error}</p>;
+  }
+
+  // Отображение данных / скелетонов
   return (
     <div className="py-4">
-      <CardList items={filteredItems} type="all" />
+      <CardList
+        items={filteredItems}
+        type="all"
+        isLoading={loading} 
+      />
     </div>
   );
 };
-
-export { SearchCatalog };

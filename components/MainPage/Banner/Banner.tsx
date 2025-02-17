@@ -1,12 +1,13 @@
 "use client";
 
-import { CardData } from "@/types/types";
+import { TitleData } from "@/types/types";
 import { useEffect, useState } from "react";
-import Carousel from "./Carousel";
+
 import { getTitleByRating } from "@/services/getTitle";
+import CustomCarousel from "./Carousel";
 
 const Banner = () => {
-  const [title, setTitle] = useState<CardData[]>([]);
+  const [title, setTitle] = useState<TitleData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -14,11 +15,11 @@ const Banner = () => {
     const fetchMoviesByRating = async () => {
       try {
         setLoading(true);
-
         const data = await getTitleByRating();
         setTitle(data);
       } catch (err) {
         console.log(err);
+        setError("Не удалось загрузить данные.");
       } finally {
         setLoading(false);
       }
@@ -27,12 +28,13 @@ const Banner = () => {
     fetchMoviesByRating();
   }, []);
 
-  if (loading) return <p>Загрузка...</p>;
-  if (error) return <p>{error}</p>;
+  if (error) {
+    return <p>{error}</p>;
+  }
 
   return (
     <div>
-      <Carousel items={title} />
+      <CustomCarousel items={title} isLoading={loading} />
     </div>
   );
 };

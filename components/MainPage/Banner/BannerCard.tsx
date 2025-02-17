@@ -1,10 +1,9 @@
-import { CardData } from "@/types/types";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React from "react";
+import { TitleData } from "@/types/types";
 
 export interface CardProps {
-  data: CardData;
+  data: TitleData;
 }
 
 const BannerCard: React.FC<CardProps> = ({ data }) => {
@@ -15,7 +14,6 @@ const BannerCard: React.FC<CardProps> = ({ data }) => {
   };
   return (
     <div className="rounded-3xl w-full h-[500px] mx-auto relative overflow-hidden cursor-pointer">
-      {/* Контейнер для изображения */}
       <div className="relative w-full h-full">
         <Image
           src={data.backdrop.url || data.backdrop.url}
@@ -25,14 +23,11 @@ const BannerCard: React.FC<CardProps> = ({ data }) => {
         />
       </div>
 
-      {/* Контейнер для текста и кнопки */}
       <div className="absolute inset-0 flex flex-col justify-between p-4 sm:p-6">
-        {/* Надпись "Сейчас в тренде!" сверху */}
         <h2 className="text-white text-sm sm:text-lg font-bold bg-black/30 px-3 py-1 rounded-full w-max">
           🔥Лидеры рейтинга
         </h2>
 
-        {/* Остальной контент */}
         <div>
           {/* Жанры */}
           <div className="flex flex-wrap gap-2">

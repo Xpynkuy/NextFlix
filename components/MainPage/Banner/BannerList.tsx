@@ -1,9 +1,9 @@
-import { CardData } from "@/types/types";
+import { TitleData } from "@/types/types";
 
 import { BannerCard } from "./BannerCard";
 
 interface CardListProps {
-  items: CardData[];
+  items: TitleData[];
 }
 
 const BannerList: React.FC<CardListProps> = ({ items }) => {

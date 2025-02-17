@@ -1,28 +1,33 @@
 "use client";
 
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import { CardData } from "@/types/types";
-import { BannerCard } from "./BannerCard";
+import { TitleData } from "@/types/types";
 import { useEffect, useState } from "react";
+import { BannerSkeletonLoader } from "@/components/Skeleton/BannerSkeletonLoader";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { BannerCard } from "./BannerCard";
+import "swiper/css";
 
 interface CustomCarouselProps {
-  items: CardData[];
+  items: TitleData[];
+  isLoading?: boolean;
 }
 
-const CustomCarousel: React.FC<CustomCarouselProps> = ({ items }) => {
+const CustomCarousel: React.FC<CustomCarouselProps> = ({
+  items,
+  isLoading,
+}) => {
   const [slidesPerView, setSlidesPerView] = useState(1.5);
 
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 640) {
-        setSlidesPerView(1); // На мобильных — 1 слайд
+        setSlidesPerView(1);
       } else if (window.innerWidth < 768) {
-        setSlidesPerView(1.2); // На маленьких планшетах — 1.2 слайда
+        setSlidesPerView(1.2);
       } else if (window.innerWidth < 1024) {
-        setSlidesPerView(1.3); // На планшетах — 1.3 слайда
+        setSlidesPerView(1.3);
       } else {
-        setSlidesPerView(1.5); // На десктопах — 1.5 слайда
+        setSlidesPerView(1.5);
       }
     };
 
@@ -31,15 +36,36 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({ items }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // Если данные загружаются, отображаем скелетоны
+  if (isLoading) {
+    return (
+      <div className="relative w-full mx-auto px-4 sm:px-6 lg:px-8">
+        <Swiper
+          spaceBetween={10}
+          slidesPerView={slidesPerView}
+          centeredSlides={true}
+          loop={true}
+        >
+          {Array.from({ length: 1 }).map((_, index) => (
+            <SwiperSlide
+              key={index}
+              className="relative transition-transform duration-300 w-full"
+            >
+              <BannerSkeletonLoader />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+    );
+  }
+
   return (
-    <div className="relative w-full  mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="relative w-full mx-auto px-4 sm:px-6 lg:px-8">
       <Swiper
-        
-        spaceBetween={10} // Отступы между слайдами
+        spaceBetween={10}
         slidesPerView={slidesPerView}
         centeredSlides={true}
         loop={true}
-        
         onInit={(swiper) => {
           swiper.slides.forEach((slide, index) => {
             if (index !== swiper.activeIndex) {
@@ -61,7 +87,10 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({ items }) => {
         }}
       >
         {items.map((item) => (
-          <SwiperSlide key={item.id} className="relative transition-transform duration-300 w-full">
+          <SwiperSlide
+            key={item.id}
+            className="relative transition-transform duration-300 w-full"
+          >
             <BannerCard data={item} />
           </SwiperSlide>
         ))}

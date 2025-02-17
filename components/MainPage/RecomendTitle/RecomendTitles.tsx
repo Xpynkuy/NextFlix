@@ -1,10 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
-import { CardData } from "@/types/types";
+import { TitleData } from "@/types/types";
 import { CardList } from "@/components/Card/CardList";
 
 interface RecomendTitleProps {
-  fetchData: () => Promise<CardData[]>;
+  fetchData: () => Promise<TitleData[]>;
   title: string;
   desc: string;
 }
@@ -14,7 +14,7 @@ const RecomendTitles: React.FC<RecomendTitleProps> = ({
   title,
   desc,
 }) => {
-  const [items, setItems] = useState<CardData[]>([]);
+  const [items, setItems] = useState<TitleData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -35,7 +35,6 @@ const RecomendTitles: React.FC<RecomendTitleProps> = ({
     fetchItems();
   }, [fetchData]);
 
-  if (loading) return <p>Загрузка...</p>;
   if (error) return <p>{error}</p>;
 
   return (
@@ -43,7 +42,7 @@ const RecomendTitles: React.FC<RecomendTitleProps> = ({
       <h1 className="text-white font-semibold text-xl mt-4">{title}</h1>
       <p className="text-gray-500 py-4">{desc}</p>
 
-      <CardList items={items} type="all" />
+      <CardList items={items} type="all" isLoading={loading} />
     </div>
   );
 };

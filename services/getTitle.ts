@@ -1,4 +1,4 @@
-import { CardData} from "@/types/types";
+import { TitleData} from "@/types/types";
 import axios from "axios";
 
 
@@ -8,7 +8,7 @@ const API_TOKEN = "EY9T3A6-DBDMSBK-NAP8P7D-EJH4AG1";
 
 
 
-export const getTitles = async (type?: string, limit: number = 250): Promise<CardData[]> => { // Получаем тайтлы для каталога
+export const getTitles = async (type?: string, limit: number = 250): Promise<TitleData[]> => { // Получаем тайтлы для каталога
   try {
     const response = await axios.get(API_URL, {
       params: {
@@ -33,7 +33,7 @@ export const getTitles = async (type?: string, limit: number = 250): Promise<Car
   }
 };
 
-export const getTitleSearch = async (limit: number = 200): Promise<CardData[]> => { // Все тайтлы для поиска
+export const getTitleSearch = async (limit: number = 200): Promise<TitleData[]> => { // Все тайтлы для поиска
   try {
     const response = await axios.get(API_URL, {
       params: {
@@ -58,7 +58,7 @@ if (response.data && response.data.docs) {
 };
 
 
-  export const getTitleById = async (id: string): Promise<CardData | null> => { // Получаем тайтлы по id
+  export const getTitleById = async (id: string): Promise<TitleData | null> => { // Получаем тайтлы по id
     try {
       const response = await axios.get(`${API_URL}/${id}`, {
         headers: {
@@ -80,7 +80,7 @@ if (response.data && response.data.docs) {
 
 
 
-export const getTitleByRating = async (limit: number = 10): Promise<CardData[]> => { 
+export const getTitleByRating = async (limit: number = 10): Promise<TitleData[]> => { 
     try {
         const response = await axios.get(API_URL, {
             params: {
@@ -104,7 +104,7 @@ export const getTitleByRating = async (limit: number = 10): Promise<CardData[]> 
           }
 };
 
-export const getCriticsTitle = async (limit: number = 5): Promise<CardData[]> => {
+export const getCriticsTitle = async (limit: number = 5): Promise<TitleData[]> => {
     try {
         const response = await axios.get(API_URL, {
             params: {
@@ -128,7 +128,7 @@ export const getCriticsTitle = async (limit: number = 5): Promise<CardData[]> =>
           }
 };
 
-export const getTitlesByVotes = async (limit: number = 5): Promise<CardData[]> => {
+export const getTitlesByVotes = async (limit: number = 5): Promise<TitleData[]> => {
     try {
         const response = await axios.get(API_URL, {
             params: {

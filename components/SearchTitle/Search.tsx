@@ -2,7 +2,7 @@
 import { useState } from "react";
 
 type Props = {
-  onSearch: (value: string) => void; // Передаем поисковый запрос
+  onSearch: (value: string) => void;
 };
 
 export const Search: React.FC<Props> = ({ onSearch }) => {
@@ -12,7 +12,7 @@ export const Search: React.FC<Props> = ({ onSearch }) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearch(value);
-    onSearch(value); // Вызываем onSearch при каждом изменении значения
+    onSearch(value);
   };
 
   const handleFocus = () => {

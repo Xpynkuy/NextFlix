@@ -1,15 +1,16 @@
-"use client";
-
 interface PaginationProps {
   hasMore: boolean;
   onLoadMore: () => void;
   loading: boolean;
 }
 
-export const Pagination: React.FC<PaginationProps> = ({ hasMore, onLoadMore, loading }) => {
+export const Pagination: React.FC<PaginationProps> = ({
+  hasMore,
+  onLoadMore,
+  loading,
+}) => {
   return (
     <div>
-      {/* Кнопка "Загрузить еще" */}
       {hasMore && (
         <div className="flex justify-center mt-6">
           <button
@@ -22,9 +23,10 @@ export const Pagination: React.FC<PaginationProps> = ({ hasMore, onLoadMore, loa
         </div>
       )}
 
-      {/* Сообщение, если данные закончились */}
       {!hasMore && (
-        <p className="text-center text-gray-500 mt-6">Вы достигли конца списка.</p>
+        <p className="text-center text-gray-500 mt-6">
+          Вы достигли конца списка.
+        </p>
       )}
     </div>
   );
